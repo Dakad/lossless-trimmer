@@ -1,7 +1,16 @@
 {
-  "name": "lossless-cut",
+  "name": "lossless-trimmer",
   "version": "2.3.0",
   "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "DakaD",
+    "email": "3106338+Dakad@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dakad/lossless-trimmer.git"
+  },
   "main": "index.js",
   "scripts": {
     "start": "electron dist",
@@ -24,16 +33,6 @@
     "clean": "rm -rf dist ffmpeg-tmp/extracted ffmpeg-tmp/binaries package",
     "clean-ffmpeg": "rm -rf ffmpeg-tmp/archives"
   },
-  "author": {
-    "name": "Mikael Finstad",
-    "email": "finstaden@gmail.com",
-    "url": "mifi.no"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mifi/lossless-cut.git"
-  },
-  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^10.0.1",
