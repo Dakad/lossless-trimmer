@@ -6,8 +6,10 @@ const windowStateKeeper = require('electron-window-state');
 
 const menu = require('./menu');
 
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { checkNewVersion } = require('./update-checker');
+
+const { app } = electron;
+const { BrowserWindow } = electron;
 
 app.setName('LosslessCut');
 
@@ -44,6 +46,8 @@ function createWindow() {
     slashes: true,
   }));
 
+  // mainWindow.loadFile('index.html');
+
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
@@ -55,9 +59,14 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
   createWindow();
   menu(app, mainWindow);
+
+  const newVersion = await checkNewVersion();
+  if (newVersion) {
+    menu(app, mainWindow, newVersion);
+  }
 });
 
 // Quit when all windows are closed.

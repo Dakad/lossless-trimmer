@@ -3,7 +3,7 @@ const fs = require('fs');
 const mime = require('mime-types');
 const strongDataUri = require('strong-data-uri');
 
-const util = require('./util');
+const { formatDuration, getOutPath, transferTimestampsWithOffset } = require('./util');
 
 bluebird.promisifyAll(fs);
 
@@ -23,11 +23,12 @@ async function captureFrame(customOutDir, filePath, video, currentTime, captureF
   const buf = getFrameFromVideo(video, captureFormat);
 
   const ext = mime.extension(buf.mimetype);
-  const time = util.formatDuration(currentTime);
+  const time = formatDuration(currentTime, true);
 
-  const outPath = util.getOutPath(customOutDir, filePath, `${time}.${ext}`);
+  const outPath = getOutPath(customOutDir, filePath, `${time}.${ext}`);
   await fs.writeFileAsync(outPath, buf);
-  return util.transferTimestamps(filePath, outPath);
+  const offset = -video.duration + currentTime;
+  return transferTimestampsWithOffset(filePath, outPath, offset);
 }
 
 module.exports = captureFrame;

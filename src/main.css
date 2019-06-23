@@ -35,21 +35,26 @@ input, button, textarea, :focus {
 }
 
 .button {
+  border-radius: 3px;
   padding: .4em;
+  vertical-align: middle;
 }
 
-.controls-wrapper button, .right-menu button {
+.controls-wrapper button, .right-menu button, .left-menu button, .controls-wrapper input {
   background: white;
   border-radius: .3em;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 60%;
+  font-size: 13px;
   vertical-align: middle;
-  padding: .2em .4em;
-  margin: 0 .5em;
+  padding: 0 .5em;
+  margin: 0 3px;
   border: none;
+  height: 18px;
+  box-sizing: border-box;
+  font-family: inherit;
 }
 
-.controls-wrapper button:active, .right-menu button:active  {
+.controls-wrapper button:active, .right-menu button:active, .left-menu button:active  {
   background: #ccc;
 }
 
@@ -58,6 +63,14 @@ input, button, textarea, :focus {
   position: absolute;
   right: 0;
   bottom: 0;
+  padding: .3em;
+}
+
+.left-menu {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: .3em;
 }
 
 .controls-wrapper {
@@ -72,7 +85,7 @@ input, button, textarea, :focus {
 
 #current-time-display {
   text-align: center;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
   padding: .5em;
 }
 
@@ -82,45 +95,30 @@ input, button, textarea, :focus {
   background-color: #444;
 }
 
-.timeline-wrapper .current-time, .timeline-wrapper .cursor-time, .timeline-wrapper .cut-start-time {
+.timeline-wrapper .current-time, .timeline-wrapper .cut-section, .timeline-wrapper .cut-time-marker {
   position: absolute;
   bottom: 0;
   top: 0;
-  width: 1px;
 }
 
-.timeline-wrapper .current-time {
-  background-color: red;
+.timeline-wrapper .cut-section {
+  z-index: 1;
+}
+.timeline-wrapper .cut-time-marker {
   z-index: 2;
+  box-sizing: border-box;
 }
-.timeline-wrapper .cursor-time {
-  background-color: black;
-}
-.timeline-wrapper .cut-start-time {
-  background-color: rgba(0, 0, 0, 0.3);
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  z-index: 1;
-}
-
-#working {
-  color: white;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-}
-
-#working i {
-  padding: .3em;
+.timeline-wrapper .current-time {
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 1);
+  width: 1px;
 }
 
 #drag-drop-field {
   padding: 15vw 0;
   border: 2vw dashed #252525;
-  color: #252525;
+  color: #303030;
   margin: 7vw;
-  font-size: 9vw;
   text-align: center;
   white-space: nowrap;
 }
@@ -154,4 +152,8 @@ input, button, textarea, :focus {
     border-bottom-color: #bbb;
     border-radius: 3px;
     box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.dragging-helper-class {
+  color: rgba(0,0,0,0.5);
 }
