@@ -1,12 +1,15 @@
 const electron = require('electron'); // eslint-disable-line
 const isDev = require('electron-is-dev');
+const path = require('path');
+const url = require('url');
+const windowStateKeeper = require('electron-window-state');
 
 const menu = require('./menu');
 
 const { checkNewVersion } = require('./update-checker');
 
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app } = electron;
+const { BrowserWindow } = electron;
 
 app.setName('LosslessCut');
 
@@ -17,10 +20,33 @@ if (!isDev) process.env.NODE_ENV = 'production';
 let mainWindow;
 
 function createWindow() {
+  // Remember size and position
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 800,
+    defaultHeight: 600,
+  });
+
   mainWindow = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     darkTheme: true,
   });
-  mainWindow.loadFile('index.html');
+
+
+  // Let us register listeners on the window, so we can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen state
+  mainWindowState.manage(mainWindow);
+
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
+
+  // mainWindow.loadFile('index.html');
 
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows

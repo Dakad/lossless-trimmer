@@ -6,6 +6,63 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.3.0] - 2019-06-13
+
+### Fixed
+- upgrade file-type to fix mp4/mov detection #144
+- Fix for TS with unknown streams #170
+
+## [2.2.0] - 2019-05-06
+
+### Changed
+- Auto delete (trash) segments when auto merge
+- Bump ffmpeg version
+- Remove linux 32 bit build because static builds are no longer provided
+
+### Fixed
+- Security fixes for npm packages
+- Allow custom output dir for merge and extract also
+- Attempt to fix extract streams (ignore unknown streams)
+
+## [2.1.0] - 2019-01-29
+
+### Added
+- Implement auto merge multiple segments
+
+## [2.0.0] - 2019-01-28
+
+### Added
+- Implement multiple cutpoints
+- Implement function for extracting all streams from a file
+- Implement crude merge funtcion for files of the same codec
+- Allow setting a time offset (video timecode)
+
+### Changed
+- Keyframe cut mode is now default
+- Default include all streams
+- Improve cut rendering graphics to make it easier to see what is cut start/end
+- GUI improvments
+
+## [1.14.0] - 2018-09-25
+
+### Added
+- Add "Delete source" button
+
+## [1.13.0] - 2018-09-09
+
+### Added
+- Add exit menu item
+
+### Changed
+- Remember certain settings across file loads
+- Some UI tweaks
+- Transfer timestamps when convering to friendly format
+- Allow for testing keyframe cut (see discussion in https://github.com/mifi/lossless-cut/pull/13)
+- Update ffmpeg
+
+### Fixed
+- Fix a rare bug with duration
+
 ## [1.12.0] - 2018-06-05
 
 ### Added

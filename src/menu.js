@@ -1,8 +1,8 @@
 const electron = require('electron'); // eslint-disable-line
 const defaultMenu = require('electron-default-menu');
 
-const Menu = electron.Menu;
-const dialog = electron.dialog;
+const { Menu } = electron;
+const { dialog } = electron;
 
 const homepage = 'https://github.com/mifi/lossless-cut';
 const releasesPage = 'https://github.com/mifi/lossless-cut/releases';
@@ -10,10 +10,7 @@ const releasesPage = 'https://github.com/mifi/lossless-cut/releases';
 module.exports = (app, mainWindow, newVersion) => {
   const menu = defaultMenu(app, electron.shell);
 
-  const editMenuIndex = menu.findIndex(item => item.Label === 'Edit');
-  if (editMenuIndex >= 0) menu.splice(editMenuIndex, 1);
-
-  menu.splice((process.platform === 'darwin' ? 1 : 0), 0, {
+  const fileMenu = {
     label: 'File',
     submenu: [
       {
@@ -38,17 +35,42 @@ module.exports = (app, mainWindow, newVersion) => {
         },
       },
       {
+        label: 'Extract all streams',
+        click() {
+          mainWindow.webContents.send('extract-all-streams', false);
+        },
+      },
+      {
+        label: 'Set custom start offset/timecode',
+        click() {
+          mainWindow.webContents.send('set-start-offset', true);
+        },
+      },
+      {
         label: 'Exit',
         click() {
           app.quit();
         },
       },
     ],
-  });
+  };
+
+  menu.splice((process.platform === 'darwin' ? 1 : 0), 0, fileMenu);
 
   const helpIndex = menu.findIndex(item => item.role === 'help');
   if (helpIndex >= 0) {
     menu.splice(helpIndex, 1, {
+      label: 'Tools',
+      submenu: [
+        {
+          label: 'Merge files',
+          click() {
+            mainWindow.webContents.send('show-merge-dialog', true);
+          },
+        },
+      ],
+    },
+    {
       role: 'help',
       submenu: [
         {
